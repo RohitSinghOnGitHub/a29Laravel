@@ -25,7 +25,7 @@ class MybettingRecordsController extends Controller
     {
         $object = new MybettingRecords();
         $period = $object->calcPeriod();
-        return $period;
+        return response(["Period" => $period]);
     }
     public function index()
     {
@@ -36,9 +36,11 @@ class MybettingRecordsController extends Controller
     public function usersBet(Request $request)
     {
         $object = new MybettingRecords();
+        $user_id = Auth::user()->id;
         $period = $object->calcPeriod();
-        $users_bet = MybettingRecords::where('Period', '<', $period)->orderBy('Period', 'desc')->get();
-        return response(["History" =>  HistoryCollection::collection($users_bet)]);
+        $users_bets = MybettingRecords::where("user_id", $user_id)->where('Period', '<', $period)->select(["Period", "Contract_Money", "Contract_Count", "Delivery", "Fee", "Select", "Status", "Amount", "win_amount", "category"])->orderBy('Period', 'desc')->paginate(5);
+        return $users_bets;
+        return response(["History" =>  HistoryCollection::collection($users_bets)]);
     }
 
 

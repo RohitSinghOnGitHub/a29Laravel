@@ -24,7 +24,7 @@ Route::post('/ForgetPassword', [UserController::class, 'forgetPassword']);
 Route::post('/ResetPaasword', [UserController::class, 'UpdatePassword']);
 Route::post('/getPass', [UserController::class, 'getOtp']);
 Route::get('/calcPeriod', [MybettingRecordsController::class, 'calcPeriod']);
-Route::get('/History', [MybettingRecordsController::class, 'usersBet']);
+
 /* End Public Routes */
 
 
@@ -44,8 +44,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/users/{user}', [UserController::class, 'destroy']);
     Route::get('/logout', [UserController::class, 'logout']);
     Route::post('/bet', [MybettingRecordsController::class, 'store']);
-    Route::get('/resultP/{period}', [ResultParityController::class, 'show']);
+    // Route::get('/resultP/{period}', [ResultParityController::class, 'show']); Not in use Yet
     Route::get('/resultsP/{period}', [ResultParityController::class, 'index']);
+    Route::post('/ManualResult', [ResultParityController::class, 'manualResult']);
     Route::get('/resultsS/{period}', [ResultSpareController::class, 'index']);
     Route::get('/resultsB/{period}', [ResultBeconController::class, 'index']);
     Route::get('/resultsE/{period}', [ResultEmerdController::class, 'index']);
@@ -65,6 +66,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/RejectWithdraw/{id}', [WithdrawRequestController::class, 'rejectWithdraw']);
     Route::post('/changeUpi', [UserController::class, 'changeUpi']);
     Route::get('/fetchUpi', [UserController::class, 'fetchUpi']);
+    Route::get('/History', [MybettingRecordsController::class, 'usersBet']);
 });
 
 /* End Protected Routes */

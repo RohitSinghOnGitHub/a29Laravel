@@ -11,6 +11,7 @@ use App\Models\ApprovedWithdraw;
 use App\Models\MybettingRecords;
 use Illuminate\Support\Facades\Auth;
 
+
 class TotalBalanceController extends Controller
 {
     public function calcTotalAmount()
@@ -31,9 +32,10 @@ class TotalBalanceController extends Controller
     public function earningCalculation($from = null, $to = null)
     {
         $Amount = MybettingRecords::whereBetween("Created_Time", [$from, $to])->sum("Amount");
-        $All_records = MybettingRecords::whereBetween("Created_Time", [$from, $to])->orderBy('Period', 'DESC')->paginate(10);
+        $All_records = MybettingRecords::Select("Period", "Amount", "Contract_Money", "Delivery", "Fee", "Select", "Status", "category", "win_amount")->whereBetween("Created_Time", [$from, $to])->orderBy('Period', 'DESC')->paginate(10);
         $win_amount = MybettingRecords::whereBetween("Created_Time", [$from, $to])->sum("win_amount");
         $Total_Income = $Amount - $win_amount;
+
 
         return  [
             "Balance" => ["Amount" => $Amount, "Winning_Amount" => $win_amount, "Total_Income" => $Total_Income, "From" => $from, "To" => $to],

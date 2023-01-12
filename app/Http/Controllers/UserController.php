@@ -165,8 +165,8 @@ class UserController extends Controller
                 return  response(["errors" => "No Record Found"]);
             } else {
                 $forgetPassword_token = Str::random(80);
-                $url = "https://a29.in/#/resetPassword/" . $forgetPassword_token;
-                // $url = "http://localhost:3000/#/resetPassword/" . $forgetPassword_token;
+                // $url = "https://a29.in/#/resetPassword/" . $forgetPassword_token;
+                $url = "http://localhost:3000/#/resetPassword/" . $forgetPassword_token;
                 $data['url'] = $url;
                 $data['email'] = $request->Email;
                 $data['title'] = "Reset Password";
